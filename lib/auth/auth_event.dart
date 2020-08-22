@@ -14,6 +14,7 @@ abstract class AuthEvent {
 class UnAuthEvent extends AuthEvent {
   @override
   Stream<AuthState> applyAsync({AuthState currentState, AuthBloc bloc}) async* {
+    await UserRepository().unAuthUser();
     yield UnAuthState();
   }
 }

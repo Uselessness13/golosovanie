@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jkh/auth/index.dart';
 import 'package:jkh/login/index.dart';
+import 'package:jkh/main/index.dart';
 
 import 'data/models/user.dart';
+
+final String ROOT_URL = 'http://192.168.0.109:8000';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'GOловосание',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.lightBlue,
         backgroundColor: Colors.blue[100],
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
@@ -40,7 +43,12 @@ class _MyHomePageState extends State<MyHomePage> {
         if (state is UnAuthState) {
           return LoginPage();
         }
-        if (state is InAuthState) {}
+        if (state is InAuthState) {
+          return MultiBlocProvider(providers: [
+            BlocProvider<MainCubit>(
+                create: (context) => MainCubit()..loadAllVotings())
+          ], child: MainPage());
+        }
       },
     );
   }
