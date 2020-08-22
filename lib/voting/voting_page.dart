@@ -4,16 +4,16 @@ import 'package:jkh/auth/auth_bloc.dart';
 import 'package:jkh/auth/index.dart';
 import 'package:jkh/data/models/user.dart';
 import 'package:jkh/data/repos/user_repository.dart';
-import 'package:jkh/main/index.dart';
+import 'package:jkh/voting/index.dart';
 
-class MainPage extends StatefulWidget {
-  static const String routeName = '/main';
+class VotingPage extends StatefulWidget {
+  static const String routeName = '/voting';
 
   @override
-  _MainPageState createState() => _MainPageState();
+  _VotingPageState createState() => _VotingPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _VotingPageState extends State<VotingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +35,7 @@ class _MainPageState extends State<MainPage> {
               })
         ],
       ),
-      body: MainScreen(),
+      body: VotingScreen(),
     );
   }
 }
