@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:jkh/auth/index.dart';
 import 'package:jkh/login/index.dart';
 import 'package:jkh/utils/snacks.dart';
@@ -8,7 +10,8 @@ import 'voting/index.dart';
 
 const String ROOT_URL = 'http://192.168.0.109:443';
 
-void main() {
+Future<void> main() async {
+  await GetStorage.init();
   runApp(MyApp());
 }
 

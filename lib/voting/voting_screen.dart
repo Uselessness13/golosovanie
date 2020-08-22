@@ -32,33 +32,58 @@ class VotingScreenState extends State<VotingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      builder: (context, AsyncSnapshot<List<Voting>> snapshot) {
-        return RefreshIndicator(
-            child: !snapshot.hasData
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : ListView(
-                    children: snapshot.data
-                        .map((e) => Card(
-                              child: ListTile(
-                                title: Text(e.name),
-                                onTap: () {
-                                  Get.bottomSheet(VotingDetailsPage(
+    return BlocBuilder<VotingCubit, List<Voting>>(builder: (context, state) {
+      return state != null && state.length > 0
+          ? RefreshIndicator(
+              child: ListView(
+                children: state
+                    .map((e) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            margin: EdgeInsets.all(8),
+                            child: ListTile(
+                              title: Text(e.name),
+                              onTap: () {
+                                // Get.bottomSheet(
+                                //     VotingDetailsPage(
+                                //       voting: e,
+                                //     ),
+                                //     isDismissible: true,
+                                //     enableDrag: true);
+                                PersistentBottomSheetController pbsc =
+                                    showBottomSheet(
+                                  backgroundColor: Colors.transparent,
+                                  context: context,
+                                  builder: (context) => VotingDetailsPage(
                                     voting: e,
-                                  )).then((value) => _load);
-                                },
-                              ),
-                            ))
-                        .toList(),
-                  ),
-            onRefresh: () {
-              return Future.microtask(() => _load);
-            });
-      },
-      stream: BlocProvider.of<VotingCubit>(context).votings,
-    );
+                                  ),
+                                );
+                                pbsc.closed.then((value) => _load);
+                              },
+                            ),
+                          ),
+                        ))
+                    .toList(),
+              ),
+              onRefresh: () {
+                return Future.delayed(Duration(milliseconds: 10), () {
+                  _load();
+                });
+              })
+          : Center(
+              child: CircularProgressIndicator(),
+            );
+    });
+    // return StreamBuilder(
+    //   builder: (context, AsyncSnapshot<List<Voting>> snapshot) {
+    //     return !snapshot.hasData
+    //         ? Center(
+    //             child: CircularProgressIndicator(),
+    //           )
+    //         :
+    //   },
+    //   stream: BlocProvider.of<VotingCubit>(context).votings,
+    // );
   }
 
   void _load() {

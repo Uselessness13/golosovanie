@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
 import 'package:jkh/auth/index.dart';
-import 'package:jkh/data/models/user.dart';
 import 'package:jkh/data/repos/user_repository.dart';
 import 'package:jkh/utils/snacks.dart';
 import 'package:meta/meta.dart';

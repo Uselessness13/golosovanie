@@ -49,10 +49,12 @@ class Answer {
   Answer({
     this.id,
     this.text,
+    this.amount,
   });
 
   int id;
   String text;
+  int amount;
 
   factory Answer.fromRawJson(String str) => Answer.fromJson(json.decode(str));
 
@@ -61,10 +63,12 @@ class Answer {
   factory Answer.fromJson(Map<String, dynamic> json) => Answer(
         id: json["id"],
         text: json["text"],
+        amount: json["amount"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "text": text,
+        "amount": amount,
       };
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:jkh/auth/index.dart';
-import 'package:jkh/data/models/user.dart';
 import 'package:jkh/login/index.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,11 +22,16 @@ class LoginScreen extends StatefulWidget {
 class LoginScreenState extends State<LoginScreen> {
   LoginScreenState();
   final TextEditingController nameController = TextEditingController();
+  GetStorage box = GetStorage();
 
   final key = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
+    if (box.hasData("user")) {
+      BlocProvider.of<AuthBloc>(context)
+          .add(AuthUserEvent(box.read("user")['name']));
+    }
     _load();
   }
 
@@ -72,7 +77,13 @@ class LoginScreenState extends State<LoginScreen> {
                                       fontWeight: FontWeight.w500,
                                       // color: Colors.white,
                                     ),
+                                validator: (text) {
+                                  if (text.isEmpty) {
+                                    return 'Введите имя';
+                                  }
+                                },
                                 decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
                                   labelText: 'Имя',
                                   labelStyle: Theme.of(context)
                                       .textTheme
