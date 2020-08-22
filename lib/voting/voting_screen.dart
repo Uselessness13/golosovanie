@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:jkh/data/models/voting.dart';
 import 'package:jkh/voting/detail_voting_screen.dart';
 import 'package:jkh/voting/index.dart';
@@ -44,11 +45,9 @@ class VotingScreenState extends State<VotingScreen> {
                               child: ListTile(
                                 title: Text(e.name),
                                 onTap: () {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (context) => VotingDetailsPage(
-                                            voting: e,
-                                          ));
+                                  Get.bottomSheet(VotingDetailsPage(
+                                    voting: e,
+                                  )).then((value) => _load);
                                 },
                               ),
                             ))

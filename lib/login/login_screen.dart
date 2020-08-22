@@ -48,8 +48,8 @@ class LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "GOЛОСОВАНИЕ",
-                  style: Theme.of(context).textTheme.headline3.copyWith(
+                  "GO",
+                  style: Theme.of(context).textTheme.headline1.copyWith(
                         fontWeight: FontWeight.w900,
                         // color: Colors.white,
                       ),
@@ -92,8 +92,7 @@ class LoginScreenState extends State<LoginScreen> {
                                 onPressed: () {
                                   if (key.currentState.validate()) {
                                     BlocProvider.of<AuthBloc>(context).add(
-                                        AuthUserEvent(
-                                            User(name: nameController.text)));
+                                        AuthUserEvent(nameController.text));
                                   }
                                 },
                                 child: Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jkh/data/models/voting.dart';
 
 class VotingDetailsPage extends StatefulWidget {
@@ -37,7 +38,15 @@ class _VotingDetailsPageState extends State<VotingDetailsPage> {
                   .map((e) => Card(
                         child: ListTile(
                           onTap: () {
-                            Navigator.pop(context);
+                            // Navigator.pop(context);
+                            Get.close(1);
+                            Get.snackbar('Вы проголосовали за вариант', e.text,
+                                snackPosition: SnackPosition.BOTTOM,
+                                barBlur: 0.0,
+                                backgroundGradient: LinearGradient(colors: [
+                                  Colors.blueGrey,
+                                  Colors.blueGrey
+                                ]));
                           },
                           title: Text(e.text),
                         ),

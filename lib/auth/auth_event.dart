@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 
+import 'package:flutter/material.dart';
 import 'package:jkh/auth/index.dart';
 import 'package:jkh/data/models/user.dart';
 import 'package:jkh/data/repos/user_repository.dart';
+import 'package:jkh/utils/snacks.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -20,7 +22,7 @@ class UnAuthEvent extends AuthEvent {
 }
 
 class AuthUserEvent extends AuthEvent {
-  final User user;
+  final String user;
 
   AuthUserEvent(this.user);
   @override
@@ -28,7 +30,11 @@ class AuthUserEvent extends AuthEvent {
     try {
       yield UnAuthState();
       var auth = await UserRepository().authUser(user);
-      if (auth == 'ok') yield InAuthState('Hello world');
+      if (auth != null)
+        yield InAuthState('Hello world');
+      else {
+        SnackBarsCubit().showSnackBar("О Ш И Б К А");
+      }
     } catch (_, stackTrace) {
       developer.log('$_',
           name: 'LoadAuthEvent', error: _, stackTrace: stackTrace);
